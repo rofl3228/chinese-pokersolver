@@ -1,7 +1,6 @@
 const Hand = require('pokersolver').Hand;
 const getPoints = require('./helper').getPoints;
 const compareHands = require('./helper').compareHands;
-const compareThreeHands = require('./helper').compareThreeHands;
 const isFous = require('./helper').isFouls;
 const makeHand = require('./helper').makeHand;
 
@@ -27,13 +26,12 @@ exports.calculate = function (hands) {
         hand = makeHand(hand);
     });
 
+    result = compareHands(hands);
+
     if (hands.length === 2) {
-        result = compareHands(hands);
-        return result;
-    } else {
-        result = compareThreeHands(hands);
-        return result;
+        result = [result[0], result[1]];
     }
+    return result;
 };
 
 exports.getPoints = getPoints;

@@ -112,66 +112,7 @@ let isFouls = function (cards) {
     }
 };
 
-module.exports.compareHands = function (hands) {
-    let result = [];
-
-    let winnerTop = Hand.winners([hands[0].top, hands[1].top]);
-    let topWin = [];
-    if (winnerTop.length > 1) {
-        topWin = [0, 0];
-        console.log('top equal');
-    } else if (winnerTop[0] === hands[0].top) {
-        topWin = [getPoints(hands[0].top, 'top'), - getPoints(hands[0].top, 'top')];
-        topWin[0] += 1; topWin[1] -= 1;
-        console.log('1 win top, points:\n', topWin);
-    } else {
-        topWin = [- getPoints(hands[1].top, 'top'), getPoints(hands[1].top, 'top')];
-        topWin[0] -= 1; topWin[1] += 1;
-        console.log('2 win top, points:\n', topWin);
-    }
-
-    let winnerMiddle = Hand.winners([hands[0].middle, hands[1].middle]);
-    let midWin = [];
-    if (winnerMiddle.length > 1) {
-        midWin = [0, 0];
-    } else if (winnerMiddle[0] === hands[0].middle) {
-        midWin = [getPoints(hands[0].middle, 'middle'), - getPoints(hands[0].middle, 'middle')];
-        midWin[0] += 1; midWin[1] -= 1;
-        console.log('1 win mid, points:\n', midWin);
-    } else {
-        midWin = [- getPoints(hands[1].middle, 'middle'), getPoints(hands[1].middle, 'middle')];
-        midWin[0] -= 1; midWin[1] += 1;
-        console.log('2 win mid, points:\n', midWin);
-    }
-
-    let winnerBottom = Hand.winners([hands[0].bottom, hands[1].bottom]);
-    let botWin = [];
-    if (winnerBottom.length > 1) {
-        botWin = [0, 0]
-    } else if (winnerBottom[0] === hands[0].bottom) {
-        botWin = [getPoints(hands[0].bottom, 'bottom'), - getPoints(hands[0].bottom, 'bottom')];
-        botWin[0] += 1; botWin[1] -= 1;
-        console.log('1 win bot, points:\n', botWin);
-    } else {
-        botWin = [- getPoints(hands[1].bottom, 'bottom'), getPoints(hands[1].bottom, 'bottom')];
-        botWin[0] -= 1; botWin[1] += 1;
-        console.log('2 win bot, points:\n', botWin);
-    }
-
-    result = [topWin[0] + midWin[0] + botWin[0], topWin[1] + midWin[1] + botWin[1]];
-    if (topWin[0] > 0 && midWin[0] > 0 && botWin[0] > 0) {
-        result[0] += 3;
-        result[1] -= 3;
-    }
-    if (topWin[1] > 0 && midWin[1] > 0 && botWin[1] > 0) {
-        result[1] += 3;
-        result[0] -= 3;
-    }
-
-    return result;
-};
-
-module.exports.compareThreeHands = function(hands) {
+module.exports.compareHands = function(hands) {
     //common points
     let commonWin = [//self win                 //with p2, p3 or p1, p3 or p1, p2
         [{top: 0, middle: 0, bottom: 0}, {top: 0, middle: 0, bottom: 0}, {top: 0, middle: 0, bottom: 0}], //p1
@@ -241,7 +182,7 @@ module.exports.compareThreeHands = function(hands) {
                 let winner = Hand.winners([self_hand[key], o_hand[key]]);
 
                 if (winner.length < 2) {
-                    if (winner[0] === self_hand[key] && !isFouls(self_hand) || (isFouls(o_hand) && !isFouls(o_hand))) {
+                    if (winner[0] === self_hand[key] && !isFouls(self_hand) || (isFouls(o_hand) && !isFouls(self_hand))) {
                         // console.log(`bonus hand ${i+1}, other hand ${n+1}, up for line ${key}`);
                         if (isFouls(o_hand)) {
                             bonusWin[i][0][key] += (getPoints(self_hand[key], key));
