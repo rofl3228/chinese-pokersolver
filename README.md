@@ -7,7 +7,7 @@ This is the wrap on the pokersolver.
 #### calculate(hands)
 
 This method returns an array with information about total points  
-```json
+```javascript
 [ 
     { total: -6, top: -1, middle: -1, bottom: -1, bonus: -3 }, 
     { total: 12, top: 2, middle: 2, bottom: 2, bonus: 6 },  
@@ -34,7 +34,7 @@ Transform hands lines to pokersolver objects
 #### hands
 ***hands*** object should be an array with two or three objects and looks like: 
 
-```json
+```javascript
 [
     {
         top: ['As', 'Kc', 'Td'],
